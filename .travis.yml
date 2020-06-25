@@ -7,10 +7,10 @@ install:
 - go get github.com/mitchellh/gox
 - go get -d golang.org/x/sys/windows
 script:
-- go test $(go list ./... | grep -v /vendor/)
+#- go test $(go list ./... | grep -v /vendor/)
 - mkdir -p build/bin
-- gox cmd/servicewrapper/main.go -ldflags "-X main.version=${TRAVIS_TAG:-SNAPSHOT}" -output="build/bin/{{.Dir}}-{{.OS}}-{{.Arch}}"
-  -os=windows -arch='amd64 386'
+- gox -ldflags "-X main.version=${TRAVIS_TAG:-SNAPSHOT}" -output="build/bin/{{.Dir}}-{{.OS}}-{{.Arch}}"
+  -os=windows -arch='amd64 386' cmd/servicewrapper/main.go
 deploy:
   provider: releases
   api_key:
