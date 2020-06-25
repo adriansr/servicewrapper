@@ -9,15 +9,17 @@ install:
 script:
 #- go test $(go list ./... | grep -v /vendor/)
 - mkdir -p build/bin
-- gox -ldflags "-X main.version=${TRAVIS_TAG:-SNAPSHOT}" -output="build/bin/{{.Dir}}-{{.OS}}-{{.Arch}}"
-  -os=windows -arch='amd64 386' cmd/servicewrapper/main.go
+- GOOS=windows GOARCH=amd64 go build cmd/servicewrapper/main.go -o build/bin/servicewrapper-amd64.exe
+- GOOS=windows GOARCH=386 go build cmd/servicewrapper/main.go -o build/bin/servicewrapper-386.exe
+#- gox -ldflags "-X main.version=${TRAVIS_TAG:-SNAPSHOT}" -output="build/bin/{{.Dir}}-{{.OS}}-{{.Arch}}"
+#-os=windows -arch='amd64 386' cmd/servicewrapper/main.go
 deploy:
   provider: releases
   api_key:
     secure: Xl3Osxp/R9/0geOqnH3EeWL6MPom33x9wOtmLn3fi/pKCOO9sXEYJboSsCInIFj1JBeQR1w8Ht43VrHOxsWiBTSPcT9cs6OwRAVaYVB99eXt7yC7/x4nSeoiWCw9slSBtRzxSD660ZpF4hrBAOQouKvb5tZ+ZTP60XoOuH9mZlWA+62vS3fE8YnEd6VVBSzkmuxdHybtlxG2hB3fIV75r/OTbuc2/s4o8TGAifohLGfKsH8SoAF+Zqog3iB1TjNKGktR1RW8rp0IU6BRRoSGQudJLJ64XNo4/4nWHb4pVHMf01k3tecN7B9Lz7371xs2UW3zQHEDYxBNIfFujtOlzCFkP7NaYrUX7Ja2UQbRqDAlINwd44YBIozFvb5h0VzLWA+CNynNXXmFMtkB+s0ovFjf6jgUVmxnYCGUjrFhD/Xr4GtvjQ48x2HUw84GAJRDiCJHOcQhKLOJLXKggRexYSLV65FHSHToTVh/SpN7zWcd8u6tYtp8eDw8B/W4ZRY6ITuTNZl7ehUtm3lSh+QP3jlJQAfSCmU3SNYGUROen7lgq106UOwmJJ/cYLk7m+tecaalUD5Drgaxlo8zEzZ2uyY0axbuxKnpzq/q6lJyF3EbqGzxR4N1cgZGSHzEvzp4bMLDuAY3h2pq8nxGWtLolVkUPfwJ1dxISBwaIpq1bOg=
   file: 
-    - "$HOME/gopath/src/github.com/adriansr/servicewrapper/build/bin/servicewrapper-windows-amd64.exe"
-    - "$HOME/gopath/src/github.com/adriansr/servicewrapper/build/bin/servicewrapper-windows-386.exe"
+    - "$HOME/gopath/src/github.com/adriansr/servicewrapper/build/bin/servicewrapper-amd64.exe"
+    - "$HOME/gopath/src/github.com/adriansr/servicewrapper/build/bin/servicewrapper-386.exe"
   on:
     repo: adriansr/servicewrapper
   skip_cleanup: 'true'
