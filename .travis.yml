@@ -4,7 +4,7 @@ go:
 - 1.13.10
 go_import_path: github.com/adriansr/servicewrapper
 install:
-- go get golang.org/x/sys/windows
+- go get -d golang.org/x/sys/windows
 script:
 - go test $(go list ./... | grep -v /vendor/)
 - mkdir -p build/bin
