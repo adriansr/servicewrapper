@@ -9,8 +9,8 @@ install:
 script:
 #- go test $(go list ./... | grep -v /vendor/)
 - mkdir -p build/bin
-- GOOS=windows GOARCH=amd64 go build cmd/servicewrapper/main.go -o build/bin/servicewrapper-amd64.exe
-- GOOS=windows GOARCH=386 go build cmd/servicewrapper/main.go -o build/bin/servicewrapper-386.exe
+- GOOS=windows GOARCH=amd64 go build -o build/bin/servicewrapper-amd64.exe cmd/servicewrapper/main.go 
+- GOOS=windows GOARCH=386 go build -o build/bin/servicewrapper-386.exe cmd/servicewrapper/main.go 
 #- gox -ldflags "-X main.version=${TRAVIS_TAG:-SNAPSHOT}" -output="build/bin/{{.Dir}}-{{.OS}}-{{.Arch}}"
 #-os=windows -arch='amd64 386' cmd/servicewrapper/main.go
 deploy:
